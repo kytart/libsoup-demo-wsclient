@@ -24,13 +24,6 @@ gboolean anotherTaskCallback()
 
 // websocket management
 
-void sendMessage(SoupWebsocketConnection *connection)
-{
-	char messageStr[] = "message from the client\0";
-	GBytes *message = g_bytes_new_static(messageStr, sizeof (messageStr));
-	soup_websocket_connection_send_message(connection, SOUP_WEBSOCKET_DATA_TEXT, message);
-}
-
 void messageCallback(SoupWebsocketConnection *ws, SoupWebsocketDataType type, GBytes *message)
 {
 	gsize dataSize;
@@ -49,8 +42,6 @@ void connectCallback(GObject* session, GAsyncResult* result, gpointer userData)
 
 	printf("websocket connected\n");
 	g_signal_connect (connection, "message", G_CALLBACK (messageCallback), NULL);
-
-	sendMessage(connection);
 }
 
 
